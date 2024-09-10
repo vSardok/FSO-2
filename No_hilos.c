@@ -2,12 +2,12 @@
  * Para compilar hay que agregar la librería matemática
  *  	gcc -o  .c -lm
  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
 #include <sys/time.h>
-
 
 #define INTERVALOS 1000000000 // Dividir el intervalo (0 - 1) en N rectangulos
 
@@ -23,15 +23,6 @@ double get_pi(double size){
     }
     return sum*4*size; // Debido a que eso es 1/4 del circulo, se multiplica por 4, ademas, como la base es siempre la misma, en lugar de multiplicarla en cada iteracion, mejor 1 vez al final
 }
-
-// void *tfunc(void *args)
-// {
-//     int i,j,k;
-//     int num = *((int *)args);
-//     int start = num * (SIZE/THREADS);
-//     int end = (num+1) * (SIZE/THREADS);
-// }
-
 
 int main()
 {
