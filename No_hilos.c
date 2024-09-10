@@ -1,31 +1,27 @@
 /*
  * Para compilar hay que agregar la librería matemática
  *  	gcc -o  .c -lm
- *		gcc -o  .c -lm -lpthread
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
 #include <sys/time.h>
-//#include <pthread.h>
 
 
-#define INTERVALOS 100
-#define THREADS 4
-double interval_SIZE;
+#define INTERVALOS 1000000000 // Dividir el intervalo (0 - 1) en N rectangulos
 
-double funcion(double x){
+double funcion(double x){ // funcion = sqrt(1-y^2)
     return sqrt(1.0-x*x);
 }
 
 double get_pi(double size){
     double sum=0.0;
-    for (int i = 0; i < size; i++)
+    for (double y = 0; y < 1; y+=size)  // Por cada intervalo
     {
-        sum+=funcion(interval_SIZE*i);
+        sum+=funcion(y);    //  Sumar la altura del rectangulo mediante la formula f(x) = sqrt(1-y^2)
     }
-    return sum*4*interval_SIZE;
+    return sum*4*size; // Debido a que eso es 1/4 del circulo, se multiplica por 4, ademas, como la base es siempre la misma, en lugar de multiplicarla en cada iteracion, mejor 1 vez al final
 }
 
 // void *tfunc(void *args)
@@ -42,31 +38,19 @@ int main()
 	long long start_ts;
 	long long stop_ts;
 	long long elapsed_time;
-	long lElapsedTime;
     struct timeval ts;
     double pi;
 	gettimeofday(&ts, NULL);
 	start_ts = ts.tv_sec; // Tiempo inicial
-
-    interval_SIZE = 1.0/ INTERVALOS;
-    pi = get_pi(INTERVALOS);
-    printf("Pi %f",pi);
-
-	// for(i=0;i<THREADS;i++)
-    // {
-    //     param[i] = i;
-         //pthread_create(&IDs[i],NULL,tfunc,&param[i]);
-    // }
-
-	// for(i=0;i<THREADS;i++)
-    //     pthread_join(IDs[i],NULL);
+    
+    // Calcular pi con la regla del trapecio
+    pi = get_pi(1.0/INTERVALOS);
+    printf("Pi %.15f",pi);
 
 	// Hasta aquí termina lo que se tiene que hacer en paralelo
 	gettimeofday(&ts, NULL);
 	stop_ts = ts.tv_sec; // Tiempo final
 	elapsed_time = stop_ts - start_ts;
-
-
-	printf("------------------------------\n");
+	printf("\n------------------------------\n");
 	printf("TIEMPO TOTAL, %lld segundos\n",elapsed_time);
 }
