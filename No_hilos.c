@@ -36,7 +36,7 @@ int main()
     
     // Calcular pi con la regla del trapecio
     pi = get_pi(1.0/INTERVALOS);
-    printf("Pi %.15f",pi);
+    printf("Pi %.8f",pi);
 
 	// Hasta aquí termina lo que se tiene que hacer en paralelo
 	gettimeofday(&ts, NULL);

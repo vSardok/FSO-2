@@ -70,7 +70,7 @@ int main()
         pthread_join(tid[i],NULL);
 
     PI*=4*SIZE; // Debido a que eso es 1/4 del circulo, se multiplica por 4, ademas, como la base es siempre la misma, en lugar de multiplicarla en cada iteracion, mejor 1 vez al final
-    printf("Pi %.15f",PI);
+    printf("Pi %.8f",PI);
 
 	// Hasta aquí termina lo que se tiene que hacer en paralelo
 	gettimeofday(&ts, NULL);
